@@ -1,0 +1,42 @@
+buildscript {
+    repositories {
+        maven { url "https://plugins.gradle.org/m2/" }
+        maven { url "https://smartbearsoftware.com/repository/maven2/" }
+    }
+}
+plugins {
+    id 'java'
+    id 'io.github.daggerok.soapui-testrunner' version '5.3.1-RC-4'
+}
+
+group 'org.example'
+version '1.0-SNAPSHOT'
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    testImplementation 'org.junit.jupiter:junit-jupiter-api:5.7.0'
+    testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.7.0'
+}
+
+repositories { jcenter() }
+dependencies {
+    extDir "org.postgresql:postgresql:9.4.1212.jre7"
+}
+
+testrunner {
+    projectFile "soap-example-soapui-project.xml"
+    outputFolder "out/tests"
+    failOnError true
+
+    projectProperties = [
+            "apiBaseUrl=https://api.github.com"
+    ]
+}
+
+
+test {
+    useJUnitPlatform()
+}
